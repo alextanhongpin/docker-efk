@@ -101,7 +101,19 @@ Kibana is available at `http://127.0.0.1:5601`.
 
 ![kibana](assets/kibana.png)
 
+## Fluentd
+
+```bash
+$ docker pull ubuntu
+
+$ docker run -t -i --log-driver=fluentd ubuntu echo "Hello Fluent Bit!"
+$ docker run --rm --log-driver=fluentd ubuntu /bin/echo 'Hello world'
+```
+
 ## TODO
 
 - Add example on how to sync data from mysql to elasticsearch
 - Add example on how to sync data from elasticsearch to S3
+- See how to use elasticsearch as complete logging tools for microservices
+- See if it is possible to integrate grafana or prometheus
+- Setup it in Kubernetes and Nomad environment

@@ -14,13 +14,22 @@ services:
       - 127.0.0.1:9200:9200
       - 127.0.0.1:9300:9300
     volumes:
-      - ./tmp:/usr/share/elasticsearch/data
-  
-  # dejavu is an elasticsearch ui
+      - ./tmp/elastichsearch:/usr/share/elasticsearch/data
+    logging:
+      driver: fluentd
+      # options:
+      #   fluentd-address: fluentd:24222
+    depends_on:
+      - fluentd
+
   dejavu:
     image: appbaseio/dejavu:latest
     ports:
       - 127.0.0.1:1358:1358
+    logging:
+      driver: fluentd
+    depends_on:
+      - fluentd
 
   kibana:
     image: docker.elastic.co/kibana/kibana:6.2.3
@@ -28,3 +37,30 @@ services:
       ELASTICSEARCH_URL: http://elasticsearch:9200
     ports:
       - 127.0.0.1:5601:5601
+    logging:
+      driver: fluentd
+    depends_on:
+      - fluentd
+
+  portainer:
+    image: portainer/portainer
+    ports:
+      - 127.0.0.1:9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+    logging:
+      driver: fluentd
+    depends_on:
+      - fluentd
+  
+  fluentd:
+    # image: fluent/fluentd:v0.12.42
+    build: ./fluentd
+    ports:
+      - 127.0.0.1:24224:24224
+    volumes:
+      - ./tmp/fluentd:/fluentd/log
+      - ./config:/fluentd/etc
+    environment:
+      - FLUENTD_CONF=fluentd.conf
+    

@@ -21,3 +21,10 @@ services:
     image: appbaseio/dejavu:latest
     ports:
       - 127.0.0.1:1358:1358
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.3
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - 127.0.0.1:5601:5601

@@ -94,3 +94,14 @@ Output:
 ```bash
 {"took":7,"timed_out":false,"_shards":{"total":5,"successful":5,"skipped":0,"failed":0},"hits":{"total":1,"max_score":0.2876821,"hits":[{"_index":"schools","_type":"school","_id":"1","_score":0.2876821,"_source":{"name":"Central School", "description":"CBSE Affiliation", "street":"Nagan","city":"paprola", "state":"HP", "zip":"176115", "location":[31.8955385, 76.8380405],"fees":2000, "tags":["Senior Secondary", "beautiful campus"], "rating":"3.5"}}]}}
 ```
+
+## Kibana
+
+Kibana is available at `http://127.0.0.1:5601`.
+
+![kibana](assets/kibana.png)
+
+## TODO
+
+- Add example on how to sync data from mysql to elasticsearch
+- Add example on how to sync data from elasticsearch to S3

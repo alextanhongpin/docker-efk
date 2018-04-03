@@ -17,10 +17,13 @@ services:
       - ./tmp/elastichsearch:/usr/share/elasticsearch/data
     logging:
       driver: fluentd
+      options:
+        tag: docker.elasticsearch
       # options:
-      #   fluentd-address: fluentd:24222
-    depends_on:
-      - fluentd
+      #   fluentd-address: 127.0.0.1:24224
+      #   tag: es.access
+    networks:
+      - esnet
 
   dejavu:
     image: appbaseio/dejavu:latest
@@ -28,8 +31,10 @@ services:
       - 127.0.0.1:1358:1358
     logging:
       driver: fluentd
-    depends_on:
-      - fluentd
+      options:
+        tag: docker.dejavu
+    networks:
+      - esnet
 
   kibana:
     image: docker.elastic.co/kibana/kibana:6.2.3
@@ -39,8 +44,10 @@ services:
       - 127.0.0.1:5601:5601
     logging:
       driver: fluentd
-    depends_on:
-      - fluentd
+      options:
+        tag: docker.kibana
+    networks:
+      - esnet
 
   portainer:
     image: portainer/portainer
@@ -50,17 +57,34 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock 
     logging:
       driver: fluentd
-    depends_on:
-      - fluentd
-  
+      options:
+        tag: docker.portainer
+    networks:
+      - esnet
+
   fluentd:
     # image: fluent/fluentd:v0.12.42
     build: ./fluentd
     ports:
       - 127.0.0.1:24224:24224
+      - 127.0.0.1:24224:24224/udp
     volumes:
-      - ./tmp/fluentd:/fluentd/log
       - ./config:/fluentd/etc
     environment:
       - FLUENTD_CONF=fluentd.conf
     
+  web:
+    image: httpd
+    ports:
+      - 127.0.0.1:80:80
+    logging:
+      driver: fluentd
+      options:
+        # fluentd-address: 127.0.0.1:24224
+        tag: docker.httpd
+    networks:
+      - esnet
+
+networks:
+  esnet:
+    external: true

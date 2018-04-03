@@ -122,6 +122,7 @@ Trigger logs:
 $ repeat 10 curl http://localhost:80/
 ```
 
+![kibana-fluentd](assets/kibana-fluentd.png)
 
 ## TODO
 

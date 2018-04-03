@@ -15,13 +15,6 @@ services:
       - 127.0.0.1:9300:9300
     volumes:
       - ./tmp/elastichsearch:/usr/share/elasticsearch/data
-    logging:
-      driver: fluentd
-      options:
-        tag: docker.elasticsearch
-      # options:
-      #   fluentd-address: 127.0.0.1:24224
-      #   tag: es.access
     networks:
       - esnet
 
@@ -29,10 +22,6 @@ services:
     image: appbaseio/dejavu:latest
     ports:
       - 127.0.0.1:1358:1358
-    logging:
-      driver: fluentd
-      options:
-        tag: docker.dejavu
     networks:
       - esnet
 
@@ -42,10 +31,6 @@ services:
       ELASTICSEARCH_URL: http://elasticsearch:9200
     ports:
       - 127.0.0.1:5601:5601
-    logging:
-      driver: fluentd
-      options:
-        tag: docker.kibana
     networks:
       - esnet
 
@@ -55,15 +40,12 @@ services:
       - 127.0.0.1:9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock 
-    logging:
-      driver: fluentd
-      options:
-        tag: docker.portainer
     networks:
       - esnet
 
+  # You need to build the fluentd docker image
+  # to install the elasticsearch gem plugin
   fluentd:
-    # image: fluent/fluentd:v0.12.42
     build: ./fluentd
     ports:
       - 127.0.0.1:24224:24224
@@ -80,7 +62,6 @@ services:
     logging:
       driver: fluentd
       options:
-        # fluentd-address: 127.0.0.1:24224
         tag: docker.httpd
     networks:
       - esnet

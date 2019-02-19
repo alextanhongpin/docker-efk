@@ -35,16 +35,6 @@ Output:
 1522654718 07:38:38 docker-cluster green 1 1 1 1 0 0 0 0 - 100.0%
 ```
 
-## UI
-
-Enter the elasticsearch url `http://127.0.0.1:9200` at the following url:
-
-```bash
-$ open http://127.0.0.1:1358
-```
-
-![webui](assets/webui.png)
-
 ## Create Index
 
 ```bash
@@ -56,6 +46,16 @@ Output:
 ```bash
 {"acknowledged":true,"shards_acknowledged":true,"index":"schools"}
 ```
+
+## UI
+
+Enter the elasticsearch url `http://127.0.0.1:9200` at the following url:
+
+```bash
+$ open http://127.0.0.1:1358
+```
+
+![webui](assets/webui.png)
 
 ## Post Data
 
